@@ -2,7 +2,19 @@
   "name": "@mudivili/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "ng": "nx",
+    "start": "nx reset && npm i --legacy-peer-deps && npm run serve",
+    "build": "nx run src:build --prod --output-path=../out && npm run build:domains",
+    "test": "nx affected --base=origin/master --target=test",
+    "test:ci": "nx run-many --all --target=test --code-coverage --watch=false --maxWorkers=50%",
+    "lint": "nx affected --target=lint --cache --exclude=src",
+    "lint:ci": "nx run-many --all --target=lint --cache --parallel=2 --exclude=src",
+    "lint:ci:pr": "nx affected --base=origin/master --target=lint --cache --exclude=src",
+    "lint:styles": "stylelint \"**/*.scss\"",
+    "lint:fix": "prettier --write src && ng lint rosa --fix=true",
+    "graph": "nx graph --affected"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~17.3.0",
